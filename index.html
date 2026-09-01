@@ -21,7 +21,15 @@ body{font-family:'Archivo',system-ui,sans-serif;background:var(--paper);color:va
 .wrap{max-width:860px;margin:0 auto;background:var(--white);
       box-shadow:0 0 60px rgba(64,36,111,.07);}
 
-/* fejléc */
+/* nyelvváltó */
+.lang{position:fixed;top:18px;right:20px;z-index:60;display:flex;
+      border:1.5px solid rgba(255,255,255,.45);background:rgba(44,23,80,.78);
+      backdrop-filter:blur(6px);}
+.lang button{font-family:'Archivo',sans-serif;font-size:12px;font-weight:800;
+             letter-spacing:.14em;color:#CBBFE0;background:none;border:none;
+             padding:9px 14px;cursor:pointer;}
+.lang button.on{background:#E3A72F;color:var(--purple-deep);}
+
 header{background:linear-gradient(155deg,var(--purple-deep) 0%,var(--purple) 100%);
        color:var(--white);padding:48px 52px 40px;}
 .eyebrow{display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:.2em;
@@ -29,12 +37,11 @@ header{background:linear-gradient(155deg,var(--purple-deep) 0%,var(--purple) 100
          padding:7px 14px;margin-bottom:20px;}
 header h1{font-family:'Anton',sans-serif;font-size:clamp(30px,4.6vw,44px);line-height:1.08;
           text-transform:uppercase;letter-spacing:.01em;}
-header .sub{margin-top:14px;font-size:16px;color:#E7DFF3;max-width:56ch;}
+header .sub{margin-top:14px;font-size:16px;color:#E7DFF3;max-width:58ch;}
 .meta{margin-top:24px;padding-top:18px;border-top:1px solid rgba(255,255,255,.22);
       display:flex;gap:28px;flex-wrap:wrap;font-size:14px;font-weight:600;color:#DCD2EC;}
 .meta b{color:var(--white);font-weight:700;}
 
-/* tartalomjegyzék */
 nav.toc{background:var(--purple-tint);padding:26px 52px;border-bottom:1px solid var(--border);}
 nav.toc h2{font-family:'Anton',sans-serif;font-size:15px;letter-spacing:.08em;
            text-transform:uppercase;color:var(--purple);margin-bottom:12px;}
@@ -44,7 +51,6 @@ nav.toc li::before{content:counter(t) ".";color:var(--gold);font-weight:700;marg
 nav.toc a{color:var(--ink);text-decoration:none;border-bottom:1px solid transparent;}
 nav.toc a:hover{border-bottom-color:var(--purple-soft);}
 
-/* tartalom */
 main{padding:8px 52px 52px;}
 section{padding-top:38px;}
 h2{font-family:'Anton',sans-serif;font-size:23px;line-height:1.2;text-transform:uppercase;
@@ -52,11 +58,9 @@ h2{font-family:'Anton',sans-serif;font-size:23px;line-height:1.2;text-transform:
    display:inline-block;padding:10px 18px;margin-bottom:18px;}
 h3{font-size:17px;font-weight:700;color:var(--purple);margin:24px 0 8px;}
 p{margin-bottom:14px;}
-ul,ol.body{margin:0 0 16px 22px;}
+ul{margin:0 0 16px 22px;}
 li{margin-bottom:7px;}
-strong{font-weight:700;}
 a{color:var(--purple);}
-.lead{font-size:17px;color:var(--ink-muted);}
 
 table{width:100%;border-collapse:collapse;margin:8px 0 20px;font-size:15px;}
 th{background:var(--purple);color:var(--white);text-align:left;padding:11px 13px;
@@ -79,298 +83,322 @@ footer{background:var(--purple-deep);color:#CFC4E2;padding:26px 52px 30px;font-s
 footer a{color:#F0C05C;}
 
 @media (max-width:720px){
-  header{padding:34px 24px 30px;}
+  header{padding:44px 24px 30px;}
   nav.toc{padding:22px 24px;}
   nav.toc ol{columns:1;}
   main{padding:4px 24px 40px;}
   footer{padding:22px 24px 26px;}
   table{font-size:14px;}
   th,td{padding:9px 10px;}
+  .lang{top:12px;right:12px;}
 }
 @media print{
   body{background:var(--white);font-size:11pt;}
   .wrap{box-shadow:none;max-width:none;}
-  nav.toc{display:none;}
-  section{page-break-inside:auto;}
+  nav.toc,.lang{display:none;}
   h2{page-break-after:avoid;}
   table{page-break-inside:avoid;}
 }
 </style>
 </head>
 <body>
+
+<div class="lang" role="group" aria-label="Nyelv / Language">
+  <button id="btnHu" class="on" type="button">HU</button>
+  <button id="btnEn" type="button">EN</button>
+</div>
+
 <div class="wrap">
 
 <header>
-  <span class="eyebrow">Újpesti Torna Egylet · Taekwondo Szakosztály</span>
-  <h1>Adatkezelési tájékoztató</h1>
-  <p class="sub">Az UTE Taekwondo mobil- és webalkalmazás adatkezeléséről — röviden, közérthetően.</p>
+  <span class="eyebrow" data-hu="Újpesti Torna Egylet · Taekwondo Szakosztály" data-en="Újpesti Torna Egylet · Taekwondo Section"></span>
+  <h1 data-hu="Adatkezelési tájékoztató" data-en="Privacy Notice"></h1>
+  <p class="sub" data-hu="Az UTE Taekwondo mobil- és webalkalmazás adatkezeléséről — röviden, közérthetően."
+     data-en="How the UTE Taekwondo mobile and web application handles your data — briefly and in plain language."></p>
   <div class="meta">
-    <span>Verzió: <b>1.0</b></span>
-    <span>Hatályos: <b>2026. szeptember 1.</b></span>
-    <span>Adatkezelő: <b>Újpesti Torna Egylet</b></span>
+    <span data-hu="Verzió: 2.0" data-en="Version: 2.0"></span>
+    <span data-hu="Hatályos: 2026. szeptember 1." data-en="Effective: 1 September 2026"></span>
+    <span data-hu="Adatkezelő: Újpesti Torna Egylet" data-en="Controller: Újpesti Torna Egylet"></span>
   </div>
 </header>
 
 <nav class="toc">
-  <h2>Tartalom</h2>
+  <h2 data-hu="Tartalom" data-en="Contents"></h2>
   <ol>
-    <li><a href="#ki">Ki kezeli az adataidat?</a></li>
-    <li><a href="#kire">Kire vonatkozik?</a></li>
-    <li><a href="#milyen">Milyen adatokat kezelünk?</a></li>
-    <li><a href="#miert">Miért és milyen jogalapon?</a></li>
-    <li><a href="#hol">Hol tárolódnak az adatok?</a></li>
-    <li><a href="#ki-fer">Ki férhet hozzájuk?</a></li>
-    <li><a href="#meddig">Meddig őrizzük?</a></li>
-    <li><a href="#jogaid">Milyen jogaid vannak?</a></li>
-    <li><a href="#torles">Az adataid törlése</a></li>
-    <li><a href="#vedelem">Hogyan védjük az adatokat?</a></li>
-    <li><a href="#nem">Amit nem csinálunk</a></li>
-    <li><a href="#panasz">Panasz és jogorvoslat</a></li>
-    <li><a href="#modositas">A tájékoztató módosítása</a></li>
+    <li><a href="#ki" data-hu="Ki kezeli az adataidat?" data-en="Who processes your data?"></a></li>
+    <li><a href="#kire" data-hu="Kire vonatkozik?" data-en="Who does this apply to?"></a></li>
+    <li><a href="#milyen" data-hu="Milyen adatokat kezelünk?" data-en="What data do we process?"></a></li>
+    <li><a href="#miert" data-hu="Miért és milyen jogalapon?" data-en="Why, and on what legal basis?"></a></li>
+    <li><a href="#hol" data-hu="Hol tárolódnak az adatok?" data-en="Where is the data stored?"></a></li>
+    <li><a href="#ki-fer" data-hu="Ki férhet hozzájuk?" data-en="Who can access it?"></a></li>
+    <li><a href="#meddig" data-hu="Meddig őrizzük?" data-en="How long do we keep it?"></a></li>
+    <li><a href="#jogaid" data-hu="Milyen jogaid vannak?" data-en="Your rights"></a></li>
+    <li><a href="#torles" data-hu="Az adataid törlése" data-en="Deleting your data"></a></li>
+    <li><a href="#vedelem" data-hu="Hogyan védjük az adatokat?" data-en="How we protect your data"></a></li>
+    <li><a href="#nem" data-hu="Amit nem csinálunk" data-en="What we don't do"></a></li>
+    <li><a href="#panasz" data-hu="Panasz és jogorvoslat" data-en="Complaints and remedies"></a></li>
+    <li><a href="#modositas" data-hu="A tájékoztató módosítása" data-en="Changes to this notice"></a></li>
   </ol>
 </nav>
 
 <main>
 
 <section id="ki">
-  <h2>1. Ki kezeli az adataidat?</h2>
-  <p><strong>Adatkezelő:</strong> Újpesti Torna Egylet (UTE)<br>
-     Székhely: 1044 Budapest, Megyeri út 13. · Adószám: 19803124-2-41<br>
-     Az alkalmazást az UTE Taekwondo Szakosztálya működteti.</p>
+  <h2 data-hu="1. Ki kezeli az adataidat?" data-en="1. Who processes your data?"></h2>
+  <p data-hu="Adatkezelő: Újpesti Torna Egylet (UTE). Székhely: 1044 Budapest, Megyeri út 13. · Adószám: 19803124-2-41. Az alkalmazást az UTE Taekwondo Szakosztálya működteti."
+     data-en="Controller: Újpesti Torna Egylet (UTE). Registered office: 1044 Budapest, Megyeri út 13, Hungary · Tax no.: 19803124-2-41. The application is operated by the UTE Taekwondo Section."></p>
 
   <div class="contact">
-    <p><strong>Adatvédelmi tisztviselő és kapcsolattartás</strong></p>
-    <p>Újpesti Torna Egylet, Jogi Igazgató</p>
-    <p>E-mail: <a href="mailto:titkarsag@ute.hu">titkarsag@ute.hu</a> · Telefon: +36 1 272-1272</p>
-    <p>Adatvédelmi kérdésben és jogaid gyakorlásában itt keress minket.</p>
+    <p><strong data-hu="Adatvédelmi tisztviselő és kapcsolattartás" data-en="Data Protection Officer and contact"></strong></p>
+    <p data-hu="Újpesti Torna Egylet, Jogi Igazgató" data-en="Újpesti Torna Egylet, Legal Director"></p>
+    <p>E-mail: <a href="mailto:titkarsag@ute.hu">titkarsag@ute.hu</a> · <span data-hu="Telefon" data-en="Phone"></span>: +36 1 272-1272</p>
+    <p data-hu="Adatvédelmi kérdésben és jogaid gyakorlásában itt keress minket."
+       data-en="Contact us here with any data protection question or to exercise your rights."></p>
   </div>
 
-  <p>Az UTE általános adatvédelmi tájékoztatója a <a href="https://www.ute.hu">www.ute.hu</a>
-     oldalon érhető el; jelen dokumentum azt az alkalmazás tekintetében egészíti ki.
-     Eltérés esetén az alkalmazásra ez a tájékoztató irányadó.</p>
+  <p data-hu="Az UTE általános adatvédelmi tájékoztatója a www.ute.hu oldalon érhető el; jelen dokumentum azt az alkalmazás tekintetében egészíti ki. Eltérés esetén az alkalmazásra ez a tájékoztató irányadó."
+     data-en="UTE's general privacy notice is available at www.ute.hu; this document supplements it in respect of the application. In case of any discrepancy, this notice governs the application."></p>
 </section>
 
 <section id="kire">
-  <h2>2. Kire vonatkozik?</h2>
-  <p>Az alkalmazás négy szerepkört ismer: <strong>adminisztrátor, edző, szülő (gondviselő)
-     és sportoló</strong>. A sportolók jelentős része kiskorú — az alkalmazás erre épült,
-     nem utólag lett hozzáigazítva:</p>
+  <h2 data-hu="2. Kire vonatkozik?" data-en="2. Who does this apply to?"></h2>
+  <p data-hu="Az alkalmazás négy szerepkört ismer: adminisztrátor, edző, szülő (gondviselő) és sportoló. A sportolók jelentős része kiskorú — az alkalmazás erre épült, nem utólag lett hozzáigazítva:"
+     data-en="The application has four roles: administrator, coach, parent (guardian) and athlete. Many athletes are minors — the application was designed for this from the outset, not adapted later:"></p>
   <ul>
-    <li>Kiskorú sportoló adatai csak azután kerülnek az alkalmazásba, hogy törvényes
-        képviselője ehhez kifejezetten hozzájárult.</li>
-    <li>Kiskorú saját fiókot csak a gondviselője által beváltott, a klub által jóváhagyott
-        meghívási folyamat után kaphat.</li>
-    <li>A 16. életévét be nem töltött gyermek esetében a hozzájárulást a törvényes
-        képviselő adja meg, illetve engedélyezi.</li>
-    <li><strong>Nincs olyan beszélgetés az alkalmazásban, amelyre a gyermek jóváhagyott
-        gondviselője ne látna rá.</strong> Ez technikai garancia, nem ígéret.</li>
+    <li data-hu="Kiskorú sportoló adatai csak azután kerülnek az alkalmazásba, hogy törvényes képviselője ehhez kifejezetten hozzájárult."
+        data-en="A minor athlete's data is entered only after their legal guardian has expressly consented."></li>
+    <li data-hu="Kiskorú saját fiókot csak a gondviselője által beváltott, a klub által jóváhagyott meghívási folyamat után kaphat."
+        data-en="A minor can only receive an account through an invitation redeemed by their guardian and approved by the club."></li>
+    <li data-hu="A 16. életévét be nem töltött gyermek esetében a hozzájárulást a törvényes képviselő adja meg, illetve engedélyezi."
+        data-en="For children under 16, consent is given or authorised by the legal guardian."></li>
+    <li data-hu="Nincs olyan beszélgetés az alkalmazásban, amelyre a gyermek jóváhagyott gondviselője ne látna rá. Ez technikai garancia, nem ígéret."
+        data-en="There is no conversation in the application that a child's approved guardian cannot see. This is a technical guarantee, not a promise."></li>
   </ul>
 </section>
 
 <section id="milyen">
-  <h2>3. Milyen adatokat kezelünk?</h2>
+  <h2 data-hu="3. Milyen adatokat kezelünk?" data-en="3. What data do we process?"></h2>
   <table>
-    <thead><tr><th>Adatkör</th><th>Kiket érint</th><th>Mire való</th></tr></thead>
+    <thead><tr>
+      <th data-hu="Adatkör" data-en="Data"></th>
+      <th data-hu="Kiket érint" data-en="Who it concerns"></th>
+      <th data-hu="Mire való" data-en="Purpose"></th>
+    </tr></thead>
     <tbody>
-      <tr><td>Fiókadatok: név, e-mail, (opcionális) telefonszám</td><td>minden felhasználó</td><td>belépés, azonosítás, kapcsolattartás</td></tr>
-      <tr><td>Sportoló törzsadatai: név, születési idő, nem, iskola neve</td><td>sportolók</td><td>klubtagság, korosztályi besorolás, iskolai kikérők</td></tr>
-      <tr><td>Csoporttagság és annak története</td><td>sportolók</td><td>edzésszervezés</td></tr>
-      <tr><td>Események, részvételi jelzés és annak indoklása</td><td>mindenki</td><td>edzés- és versenyszervezés</td></tr>
-      <tr><td>Jelenléti adatok</td><td>sportolók</td><td>látogatottság követése</td></tr>
-      <tr><td>Övvizsgák (dátum, fokozat, eredmény)</td><td>sportolók</td><td>sportszakmai előrehaladás</td></tr>
-      <tr><td><strong>Testtömeg-mérések</strong> a mérés körülményeivel</td><td>sportolók, akiknél a követés be van kapcsolva</td><td>súlycsoportos versenyeztetés</td></tr>
-      <tr><td><strong>Sportorvosi vizsgálat dátuma és érvényessége</strong></td><td>sportolók</td><td>versenyzési jogosultság követése</td></tr>
-      <tr><td>Versenynevezések, mérkőzések, eredmények</td><td>versenyző sportolók</td><td>versenyeztetés, eredménykövetés</td></tr>
-      <tr><td>Üzenetek tartalma</td><td>mindenki</td><td>klubon belüli kommunikáció</td></tr>
-      <tr><td>Fuvarfelajánlások, gyermekátvételi meghatalmazások</td><td>szülők, sportolók</td><td>utazásszervezés, gyermekvédelem <em>(a funkció bevezetésekor)</em></td></tr>
-      <tr><td>Nyilatkozatok, hozzájárulások</td><td>szülők, sportolók</td><td>jogszabályi és szövetségi kötelezettségek <em>(a funkció bevezetésekor; a TAJ-szám kizárólag titkosítva, a szükséges ideig)</em></td></tr>
-      <tr><td>Naplóadatok: ki, mikor, mit módosított</td><td>mindenki</td><td>elszámoltathatóság, visszaélések kizárása</td></tr>
+      <tr><td data-hu="Fiókadatok: név, e-mail, (opcionális) telefonszám" data-en="Account data: name, email, optional phone number"></td><td data-hu="minden felhasználó" data-en="all users"></td><td data-hu="belépés, azonosítás, kapcsolattartás" data-en="sign-in, identification, contact"></td></tr>
+      <tr><td data-hu="Sportoló törzsadatai: név, születési idő, nem, iskola neve" data-en="Athlete master data: name, date of birth, gender, school"></td><td data-hu="sportolók" data-en="athletes"></td><td data-hu="klubtagság, korosztályi besorolás, iskolai kikérők" data-en="membership, age category, school absence permits"></td></tr>
+      <tr><td data-hu="Csoporttagság és annak története" data-en="Training group membership and its history"></td><td data-hu="sportolók" data-en="athletes"></td><td data-hu="edzésszervezés" data-en="organising training"></td></tr>
+      <tr><td data-hu="Események, részvételi jelzés és annak indoklása" data-en="Events, attendance responses and their stated reasons"></td><td data-hu="mindenki" data-en="everyone"></td><td data-hu="edzés- és versenyszervezés" data-en="organising training and competitions"></td></tr>
+      <tr><td data-hu="Jelenléti adatok" data-en="Attendance records"></td><td data-hu="sportolók" data-en="athletes"></td><td data-hu="látogatottság követése" data-en="tracking attendance"></td></tr>
+      <tr><td data-hu="Övvizsgák (dátum, fokozat, eredmény)" data-en="Belt examinations (date, grade, result)"></td><td data-hu="sportolók" data-en="athletes"></td><td data-hu="sportszakmai előrehaladás" data-en="tracking progression"></td></tr>
+      <tr><td data-hu="Testtömeg-mérések a mérés körülményeivel" data-en="Body weight measurements with their circumstances"></td><td data-hu="sportolók, akiknél a követés be van kapcsolva" data-en="athletes with tracking enabled"></td><td data-hu="súlycsoportos versenyeztetés" data-en="weight category competition"></td></tr>
+      <tr><td data-hu="Sportorvosi vizsgálat dátuma és érvényessége" data-en="Sports medical examination date and validity"></td><td data-hu="sportolók" data-en="athletes"></td><td data-hu="versenyzési jogosultság követése" data-en="tracking eligibility to compete"></td></tr>
+      <tr><td data-hu="Versenynevezések, mérkőzések, eredmények" data-en="Competition entries, matches, results"></td><td data-hu="versenyző sportolók" data-en="competing athletes"></td><td data-hu="versenyeztetés, eredménykövetés" data-en="competition and result tracking"></td></tr>
+      <tr><td data-hu="Üzenetek tartalma" data-en="Message content"></td><td data-hu="mindenki" data-en="everyone"></td><td data-hu="klubon belüli kommunikáció" data-en="communication within the club"></td></tr>
+      <tr><td data-hu="Értesítési beállítások és eszköz-token" data-en="Notification settings and device token"></td><td data-hu="akik bekapcsolják az értesítéseket" data-en="users who enable notifications"></td><td data-hu="push értesítések kézbesítése" data-en="delivering push notifications"></td></tr>
+      <tr><td data-hu="Fuvarfelajánlások, gyermekátvételi meghatalmazások" data-en="Lift offers, child collection authorisations"></td><td data-hu="szülők, sportolók" data-en="parents, athletes"></td><td data-hu="utazásszervezés, gyermekvédelem (a funkció bevezetésekor)" data-en="travel arrangements, child safeguarding (when the feature launches)"></td></tr>
+      <tr><td data-hu="Nyilatkozatok, hozzájárulások" data-en="Declarations and consents"></td><td data-hu="szülők, sportolók" data-en="parents, athletes"></td><td data-hu="jogszabályi és szövetségi kötelezettségek (a funkció bevezetésekor; a TAJ-szám kizárólag titkosítva, a szükséges ideig)" data-en="statutory and federation obligations (when the feature launches; social security numbers encrypted only, for as long as necessary)"></td></tr>
+      <tr><td data-hu="Naplóadatok: ki, mikor, mit módosított" data-en="Audit log: who changed what and when"></td><td data-hu="mindenki" data-en="everyone"></td><td data-hu="elszámoltathatóság, visszaélések kizárása" data-en="accountability, preventing misuse"></td></tr>
     </tbody>
   </table>
 
   <div class="callout">
-    <h4>Egészségügyi jellegű adatok</h4>
-    <p>A <strong>testtömeg</strong> és a <strong>sportorvosi érvényesség</strong> egészségügyi
-    jellegű adat. Ezeket kizárólag kifejezett hozzájárulás alapján kezeljük, és szigorúan
-    korlátozott körben (lásd 6. pont). A testtömeg-mérést rögzítheti az edző, a sportoló
-    saját magánál, és a szülő a saját gyermekénél. A követés sportolónként bármikor
-    kikapcsolható.</p>
+    <h4 data-hu="Egészségügyi jellegű adatok" data-en="Health-related data"></h4>
+    <p data-hu="A testtömeg és a sportorvosi érvényesség egészségügyi jellegű adat. Ezeket kizárólag kifejezett hozzájárulás alapján kezeljük, és szigorúan korlátozott körben (lásd 6. pont). A testtömeg-mérést rögzítheti az edző, a sportoló saját magánál, és a szülő a saját gyermekénél. A követés sportolónként bármikor kikapcsolható."
+       data-en="Body weight and sports medical validity are health-related data. We process them solely on the basis of explicit consent and within a strictly limited circle (see section 6). Weight measurements may be recorded by a coach, by the athlete for themselves, and by a parent for their own child. Tracking can be switched off per athlete at any time."></p>
   </div>
 
-  <p><strong>Amit nem kezelünk:</strong> az alkalmazás nem kér és nem tárol fényképet a
-     gyermekekről, nem használ hirdetési azonosítókat, nem követ helyadatot, és nem
-     tartalmaz hirdetést.</p>
+  <p data-hu="Amit nem kezelünk: az alkalmazás nem kér és nem tárol fényképet a gyermekekről, nem használ hirdetési azonosítókat, nem követ helyadatot, és nem tartalmaz hirdetést."
+     data-en="What we do not process: the application neither requests nor stores photographs of children, uses no advertising identifiers, tracks no location data, and contains no advertising."></p>
 </section>
 
 <section id="miert">
-  <h2>4. Miért és milyen jogalapon?</h2>
+  <h2 data-hu="4. Miért és milyen jogalapon?" data-en="4. Why, and on what legal basis?"></h2>
   <table>
-    <thead><tr><th>Cél</th><th>Jogalap</th></tr></thead>
+    <thead><tr><th data-hu="Cél" data-en="Purpose"></th><th data-hu="Jogalap" data-en="Legal basis"></th></tr></thead>
     <tbody>
-      <tr><td>Klubtagsággal járó szervezés: edzések, események, jelenlét, csoportok, üzenetek</td>
-          <td>az egyesületi tagsági jogviszony teljesítése, illetve az UTE jogos érdeke a szakosztály működtetésében — GDPR 6. cikk (1) b) és f)</td></tr>
-      <tr><td>Fiók létrehozása és fenntartása</td><td>szerződés teljesítése — GDPR 6. cikk (1) b)</td></tr>
-      <tr><td>Testtömeg-követés</td><td><strong>kifejezett hozzájárulás</strong> — GDPR 9. cikk (2) a); kiskorúnál a törvényes képviselőé. Bármikor visszavonható.</td></tr>
-      <tr><td>Sportorvosi érvényesség nyilvántartása</td><td><strong>kifejezett hozzájárulás</strong> — GDPR 9. cikk (2) a), a sportról szóló 2004. évi I. törvény szerinti versenyzési feltételek követésére</td></tr>
-      <tr><td>Versenyeredmények kezelése</td><td>az UTE jogos érdeke (sportszakmai működés); a versenyeredmény a klubon belül nyilvános adat</td></tr>
-      <tr><td>Nyilatkozatok, hozzájárulások kezelése</td><td>jogi kötelezettség teljesítése, illetve hozzájárulás</td></tr>
-      <tr><td>Naplózás</td><td>az UTE jogos érdeke — elszámoltathatóság, adatbiztonság</td></tr>
+      <tr><td data-hu="Klubtagsággal járó szervezés: edzések, események, jelenlét, csoportok, üzenetek" data-en="Club activities: training, events, attendance, groups, messages"></td>
+          <td data-hu="az egyesületi tagsági jogviszony teljesítése, illetve az UTE jogos érdeke a szakosztály működtetésében — GDPR 6. cikk (1) b) és f)" data-en="performance of the membership relationship and UTE's legitimate interest in running the section — GDPR Art. 6(1)(b) and (f)"></td></tr>
+      <tr><td data-hu="Fiók létrehozása és fenntartása" data-en="Creating and maintaining an account"></td><td data-hu="szerződés teljesítése — GDPR 6. cikk (1) b)" data-en="performance of a contract — GDPR Art. 6(1)(b)"></td></tr>
+      <tr><td data-hu="Testtömeg-követés" data-en="Body weight tracking"></td><td data-hu="kifejezett hozzájárulás — GDPR 9. cikk (2) a); kiskorúnál a törvényes képviselőé. Bármikor visszavonható." data-en="explicit consent — GDPR Art. 9(2)(a); for minors, that of the legal guardian. Withdrawable at any time."></td></tr>
+      <tr><td data-hu="Sportorvosi érvényesség nyilvántartása" data-en="Recording sports medical validity"></td><td data-hu="kifejezett hozzájárulás — GDPR 9. cikk (2) a), a sportról szóló 2004. évi I. törvény szerinti versenyzési feltételek követésére" data-en="explicit consent — GDPR Art. 9(2)(a), to track eligibility conditions under Hungarian Act I of 2004 on Sport"></td></tr>
+      <tr><td data-hu="Versenyeredmények kezelése" data-en="Processing competition results"></td><td data-hu="az UTE jogos érdeke (sportszakmai működés); a versenyeredmény a klubon belül nyilvános adat" data-en="UTE's legitimate interest (sporting operations); competition results are public within the club"></td></tr>
+      <tr><td data-hu="Push értesítések küldése" data-en="Sending push notifications"></td><td data-hu="hozzájárulás — GDPR 6. cikk (1) a). Az értesítés bekapcsolása önkéntes, és bármikor visszavonható." data-en="consent — GDPR Art. 6(1)(a). Enabling notifications is voluntary and can be withdrawn at any time."></td></tr>
+      <tr><td data-hu="Nyilatkozatok, hozzájárulások kezelése" data-en="Handling declarations and consents"></td><td data-hu="jogi kötelezettség teljesítése, illetve hozzájárulás" data-en="compliance with a legal obligation, or consent"></td></tr>
+      <tr><td data-hu="Naplózás" data-en="Audit logging"></td><td data-hu="az UTE jogos érdeke — elszámoltathatóság, adatbiztonság" data-en="UTE's legitimate interest — accountability and data security"></td></tr>
     </tbody>
   </table>
 </section>
 
 <section id="hol">
-  <h2>5. Hol tárolódnak az adatok?</h2>
-  <p>Az adatok az <strong>Európai Unióban</strong>, Írországban működő adatközpontban
-     tárolódnak.</p>
-  <h3>Adatfeldolgozók</h3>
+  <h2 data-hu="5. Hol tárolódnak az adatok?" data-en="5. Where is the data stored?"></h2>
+  <p data-hu="Az adatok az Európai Unióban, Írországban működő adatközpontban tárolódnak."
+     data-en="Data is stored in a data centre located in Ireland, within the European Union."></p>
+  <h3 data-hu="Adatfeldolgozók" data-en="Processors"></h3>
   <table>
-    <thead><tr><th>Adatfeldolgozó</th><th>Feladat</th><th>Hely</th></tr></thead>
+    <thead><tr><th data-hu="Adatfeldolgozó" data-en="Processor"></th><th data-hu="Feladat" data-en="Role"></th><th data-hu="Hely" data-en="Location"></th></tr></thead>
     <tbody>
       <tr><td>Supabase, Inc.</td>
-          <td>adatbázis- és alkalmazás-infrastruktúra üzemeltetése, valamint a rendszer által küldött technikai üzenetek (pl. jelszó-visszaállítás) kézbesítése</td>
-          <td>tárolás: EU (Írország); a szolgáltatóval adatfeldolgozói megállapodás (DPA) szerinti garanciák állnak fenn</td></tr>
-      <tr><td>DeepL SE <em>(csak ha a fordítási javaslat funkció be van kapcsolva)</em></td>
-          <td>a klub törzsadatainak (pl. csoportnevek) fordítási javaslata — <strong>személyes adat nem kerül továbbításra</strong></td>
-          <td>EU (Németország)</td></tr>
-      <tr><td>Expo (push értesítés) <em>(a funkció bevezetésekor)</em></td>
-          <td>értesítések kézbesítése a mobilalkalmazásba — az értesítés eszközazonosítót és rövid szöveget tartalmaz</td>
-          <td>a szolgáltató szerint; a funkció élesítésekor pontosítjuk</td></tr>
+          <td data-hu="adatbázis- és alkalmazás-infrastruktúra üzemeltetése, valamint a rendszer által küldött technikai üzenetek (pl. jelszó-visszaállítás) kézbesítése" data-en="operating the database and application infrastructure, and delivering technical system messages (e.g. password reset)"></td>
+          <td data-hu="tárolás: EU (Írország); a szolgáltatóval adatfeldolgozói megállapodás (DPA) szerinti garanciák állnak fenn" data-en="storage: EU (Ireland); safeguards are in place under a data processing agreement (DPA)"></td></tr>
+      <tr><td>Expo Application Services</td>
+          <td data-hu="push értesítések kézbesítése — részletek alább" data-en="delivering push notifications — details below"></td>
+          <td data-hu="Egyesült Államok" data-en="United States"></td></tr>
+      <tr><td>DeepL SE</td>
+          <td data-hu="a klub törzsadatainak (pl. csoportnevek) fordítási javaslata — személyes adat nem kerül továbbításra (csak ha a funkció be van kapcsolva)" data-en="translation suggestions for club master data (e.g. group names) — no personal data is transferred (only when the feature is enabled)"></td>
+          <td data-hu="EU (Németország)" data-en="EU (Germany)"></td></tr>
     </tbody>
   </table>
-  <p>Az alkalmazás fejlesztési környezete és forráskódja nem tartalmaz személyes adatot.
-     Az adatokhoz az adatfeldolgozókon túl kizárólag a 6. pont szerinti jogosultak férnek hozzá.</p>
+
+  <div class="callout">
+    <h4 data-hu="Push értesítések — Expo (Expo Application Services, USA)" data-en="Push notifications — Expo (Expo Application Services, USA)"></h4>
+    <p data-hu="Ha az alkalmazásban bekapcsolod az értesítéseket, a készülékedről egy eszköz-azonosító (push token) keletkezik, és azt továbbítjuk az Expo Application Services részére, amely az értesítés kézbesítését végzi. Az Expo ebben a folyamatban adatfeldolgozóként jár el, az Egyesült Államokban."
+       data-en="If you enable notifications in the application, a device identifier (push token) is generated on your device and transferred to Expo Application Services, which delivers the notification. In this process Expo acts as a processor, in the United States."></p>
+    <p><strong data-hu="Mit továbbítunk:" data-en="What we transfer:"></strong></p>
+    <ul>
+      <li data-hu="az eszköz push tokenjét (véletlen azonosító, amiből a személyazonosságod nem állapítható meg)," data-en="the device's push token (a random identifier from which your identity cannot be determined),"></li>
+      <li data-hu="az értesítés rövid szövegét." data-en="the short text of the notification."></li>
+    </ul>
+    <p><strong data-hu="Mit NEM továbbítunk:" data-en="What we do NOT transfer:"></strong>
+       <span data-hu="az értesítés szövege szándékosan csak annyit tartalmaz, hogy történt valami, és hol nézd meg. Nem szerepel benne üzenet szövege, lemondási indoklás, testtömeg, sportorvosi részlet, versenyeredmény vagy helyezés, és gyermek neve sem. Erre azért van szükség, mert az értesítés a telefon zárolt képernyőjén is megjelenik, ahol illetéktelen is láthatja."
+             data-en="the notification text deliberately says only that something happened and where to look. It contains no message content, no stated reason for an absence, no body weight, no medical details, no competition result or ranking, and no child's name. This matters because notifications also appear on the phone's lock screen, where others may see them."></span></p>
+    <p><strong data-hu="Jogalap:" data-en="Legal basis:"></strong>
+       <span data-hu="hozzájárulás (GDPR 6. cikk (1) a) pont). Az értesítés bekapcsolása önkéntes, és bármikor visszavonható."
+             data-en="consent (GDPR Art. 6(1)(a)). Enabling notifications is voluntary and can be withdrawn at any time."></span></p>
+    <p><strong data-hu="Megőrzés:" data-en="Retention:"></strong>
+       <span data-hu="az eszköz-tokent addig tároljuk, amíg az értesítést ki nem kapcsolod, ki nem jelentkezel, vagy a készülék 90 napig nem jelentkezik be. Ezt követően a token érvénytelenítésre kerül. A kiküldésre váró értesítések nyilvántartásából a már kézbesített tételek 7 nap után törlődnek."
+             data-en="we keep the device token until you turn notifications off, sign out, or the device does not check in for 90 days. After that the token is invalidated. Delivered items are removed from the outgoing notification queue after 7 days."></span></p>
+    <p><strong data-hu="Hogyan kapcsolhatod ki:" data-en="How to turn it off:"></strong>
+       <span data-hu="az alkalmazásban a Beállítások → Értesítések menüpontban, típusonként vagy egyetlen „néma mód" kapcsolóval. Teljesen letilthatod a készülék rendszerbeállításaiban is."
+             data-en="in the application under Settings → Notifications, per notification type or with a single “silent mode” switch. You can also disable them entirely in your device's system settings."></span></p>
+    <p data-hu="Vendégmódban (demó) nem küldünk értesítést, és eszköz-token sem keletkezik."
+       data-en="In guest (demo) mode we send no notifications and no device token is created."></p>
+  </div>
+
+  <p data-hu="Az alkalmazás fejlesztési környezete és forráskódja nem tartalmaz személyes adatot. Az adatokhoz az adatfeldolgozókon túl kizárólag a 6. pont szerinti jogosultak férnek hozzá."
+     data-en="The application's development environment and source code contain no personal data. Apart from the processors listed, only the persons described in section 6 have access."></p>
 </section>
 
 <section id="ki-fer">
-  <h2>6. Ki férhet hozzájuk?</h2>
-  <p>A hozzáférést nem házirend, hanem <strong>az adatbázis szintjén kikényszerített
-     jogosultsági rendszer</strong> szabályozza:</p>
+  <h2 data-hu="6. Ki férhet hozzájuk?" data-en="6. Who can access it?"></h2>
+  <p data-hu="A hozzáférést nem házirend, hanem az adatbázis szintjén kikényszerített jogosultsági rendszer szabályozza:"
+     data-en="Access is governed not by policy but by a permission system enforced at the database level:"></p>
   <ul>
-    <li><strong>A szülő kizárólag a saját, hozzá jóváhagyottan kapcsolt gyermeke(i) adatait
-        látja.</strong> Más gyermek adatait technikailag sem tudja lekérdezni.</li>
-    <li><strong>A sportoló a saját adatait látja.</strong></li>
-    <li><strong>Az edzők és az adminisztrátorok</strong> a szakosztály sportolóinak adatait
-        a feladataik ellátásához szükséges körben látják.</li>
-    <li><strong>Egészségügyi jellegű adat</strong> (testtömeg, sportorvosi) kizárólag az
-        edzők, az érintett sportoló és annak saját gondviselője számára látható.</li>
-    <li><strong>A részvétel-lemondás indoklását</strong> kizárólag az edzők és az érintett
-        sportoló saját gondviselője láthatja — más szülő soha.</li>
-    <li>Minden módosításról napló készül (ki, mikor, mit változtatott).</li>
+    <li data-hu="A szülő kizárólag a saját, hozzá jóváhagyottan kapcsolt gyermeke(i) adatait látja. Más gyermek adatait technikailag sem tudja lekérdezni."
+        data-en="A parent sees only the data of their own, approved-linked child or children. They cannot technically query another child's data."></li>
+    <li data-hu="A sportoló a saját adatait látja." data-en="An athlete sees their own data."></li>
+    <li data-hu="Az edzők és az adminisztrátorok a szakosztály sportolóinak adatait a feladataik ellátásához szükséges körben látják."
+        data-en="Coaches and administrators see the section's athlete data to the extent necessary for their duties."></li>
+    <li data-hu="Egészségügyi jellegű adat (testtömeg, sportorvosi) kizárólag az edzők, az érintett sportoló és annak saját gondviselője számára látható."
+        data-en="Health-related data (weight, medical validity) is visible only to coaches, the athlete concerned and their own guardian."></li>
+    <li data-hu="A részvétel-lemondás indoklását kizárólag az edzők és az érintett sportoló saját gondviselője láthatja — más szülő soha."
+        data-en="The stated reason for an absence is visible only to coaches and the athlete's own guardian — never to another parent."></li>
+    <li data-hu="Minden módosításról napló készül (ki, mikor, mit változtatott)."
+        data-en="Every change is logged (who changed what and when)."></li>
   </ul>
   <div class="callout">
-    <h4>Kivétel: klubon belüli nyilvánosság</h4>
-    <p>A versenynevezések és versenyeredmények a klub bejelentkezett tagjai számára
-    láthatók, mert a versenyeredmény természeténél fogva nyilvános sportadat. Ez a kivétel
-    <strong>kizárólag a versenyadatokra</strong> vonatkozik; a testtömeg, a sportorvosi
-    adat és a lemondás indoklása változatlanul szűk körben marad.</p>
+    <h4 data-hu="Kivétel: klubon belüli nyilvánosság" data-en="Exception: visibility within the club"></h4>
+    <p data-hu="A versenynevezések és versenyeredmények a klub bejelentkezett tagjai számára láthatók, mert a versenyeredmény természeténél fogva nyilvános sportadat. Ez a kivétel kizárólag a versenyadatokra vonatkozik; a testtömeg, a sportorvosi adat és a lemondás indoklása változatlanul szűk körben marad."
+       data-en="Competition entries and results are visible to signed-in club members, because competition results are inherently public sporting data. This exception applies solely to competition data; body weight, medical data and stated absence reasons remain strictly restricted."></p>
   </div>
 </section>
 
 <section id="meddig">
-  <h2>7. Meddig őrizzük?</h2>
+  <h2 data-hu="7. Meddig őrizzük?" data-en="7. How long do we keep it?"></h2>
   <table>
-    <thead><tr><th>Adatkör</th><th>Megőrzés</th></tr></thead>
+    <thead><tr><th data-hu="Adatkör" data-en="Data"></th><th data-hu="Megőrzés" data-en="Retention"></th></tr></thead>
     <tbody>
-      <tr><td>Fiók- és sportolói adatok</td><td>a klubtagság fennállása alatt, majd a megszűnést követő <strong>1 év</strong> elteltével törlés vagy visszafordíthatatlan anonimizálás</td></tr>
-      <tr><td>Testtömeg-mérések</td><td>a hozzájárulás visszavonásáig, de legfeljebb a tagság megszűnéséig</td></tr>
-      <tr><td>Üzenetek</td><td>a tagsági adatokkal azonos ideig</td></tr>
-      <tr><td>Nyilatkozatok TAJ-számmal</td><td>kizárólag az adott esemény lebonyolításáig, ezt követően automatikus törlés</td></tr>
-      <tr><td>Versenyeredmények</td><td>a helyi sporttörténeti nyilvántartás érdekében <strong>név nélkül, anonimizálva</strong> hosszabb ideig megőrizzük — lásd 9. pont</td></tr>
-      <tr><td>Naplóadatok</td><td><strong>5 év</strong></td></tr>
+      <tr><td data-hu="Fiók- és sportolói adatok" data-en="Account and athlete data"></td><td data-hu="a klubtagság fennállása alatt, majd a megszűnést követő 1 év elteltével törlés vagy visszafordíthatatlan anonimizálás" data-en="for the duration of membership, then deleted or irreversibly anonymised 1 year after it ends"></td></tr>
+      <tr><td data-hu="Testtömeg-mérések" data-en="Body weight measurements"></td><td data-hu="a hozzájárulás visszavonásáig, de legfeljebb a tagság megszűnéséig" data-en="until consent is withdrawn, at most until membership ends"></td></tr>
+      <tr><td data-hu="Üzenetek" data-en="Messages"></td><td data-hu="a tagsági adatokkal azonos ideig" data-en="as long as the membership data"></td></tr>
+      <tr><td data-hu="Eszköz-token (push)" data-en="Device token (push)"></td><td data-hu="az értesítések kikapcsolásáig, kijelentkezésig, vagy 90 nap inaktivitásig" data-en="until notifications are disabled, you sign out, or 90 days of inactivity"></td></tr>
+      <tr><td data-hu="Nyilatkozatok TAJ-számmal" data-en="Declarations containing a social security number"></td><td data-hu="kizárólag az adott esemény lebonyolításáig, ezt követően automatikus törlés" data-en="only until the given event is completed, then deleted automatically"></td></tr>
+      <tr><td data-hu="Versenyeredmények" data-en="Competition results"></td><td data-hu="a helyi sporttörténeti nyilvántartás érdekében név nélkül, anonimizálva hosszabb ideig megőrizzük — lásd 9. pont" data-en="kept longer without names, anonymised, for the club's sporting record — see section 9"></td></tr>
+      <tr><td data-hu="Naplóadatok" data-en="Audit log"></td><td data-hu="5 év" data-en="5 years"></td></tr>
     </tbody>
   </table>
 </section>
 
 <section id="jogaid">
-  <h2>8. Milyen jogaid vannak?</h2>
-  <p>A GDPR szerint jogod van a <strong>tájékoztatáshoz, hozzáféréshez, helyesbítéshez,
-     törléshez („elfeledtetéshez"), az adatkezelés korlátozásához, az adathordozhatósághoz
-     és a tiltakozáshoz</strong>.</p>
-  <p>Az alkalmazásban közvetlenül:</p>
+  <h2 data-hu="8. Milyen jogaid vannak?" data-en="8. Your rights"></h2>
+  <p data-hu="A GDPR szerint jogod van a tájékoztatáshoz, hozzáféréshez, helyesbítéshez, törléshez („elfeledtetéshez"), az adatkezelés korlátozásához, az adathordozhatósághoz és a tiltakozáshoz."
+     data-en="Under the GDPR you have the right to be informed, of access, to rectification, to erasure (“to be forgotten”), to restriction of processing, to data portability and to object."></p>
+  <p data-hu="Az alkalmazásban közvetlenül:" data-en="Directly in the application:"></p>
   <ul>
-    <li><strong>Helyesbítés:</strong> a saját (és gondviselőként a gyermeked) adatai a
-        felületen szerkeszthetők, illetve az edzőnél kérhető a javítás.</li>
-    <li><strong>Hozzájárulás visszavonása:</strong> a testtömeg-követés sportolónként
-        kikapcsolható; a visszavonás a korábbi adatkezelés jogszerűségét nem érinti.</li>
-    <li><strong>Törlés kérése:</strong> a <em>Beállítások</em> képernyőn indítható — lásd
-        a következő pontot.</li>
-    <li><strong>Másolat kérése (hozzáférés, hordozhatóság):</strong> az 1. pont szerinti
-        elérhetőségen; az adatokat géppel olvasható formában adjuk át.</li>
+    <li data-hu="Helyesbítés: a saját (és gondviselőként a gyermeked) adatai a felületen szerkeszthetők, illetve az edzőnél kérhető a javítás."
+        data-en="Rectification: your own data (and, as a guardian, your child's) can be edited in the app, or corrected via your coach."></li>
+    <li data-hu="Hozzájárulás visszavonása: a testtömeg-követés sportolónként kikapcsolható, az értesítések a Beállításokban; a visszavonás a korábbi adatkezelés jogszerűségét nem érinti."
+        data-en="Withdrawing consent: weight tracking can be disabled per athlete and notifications in Settings; withdrawal does not affect the lawfulness of prior processing."></li>
+    <li data-hu="Törlés kérése: a Beállítások képernyőn indítható — lásd a következő pontot."
+        data-en="Requesting erasure: can be initiated on the Settings screen — see the next section."></li>
+    <li data-hu="Másolat kérése (hozzáférés, hordozhatóság): az 1. pont szerinti elérhetőségen; az adatokat géppel olvasható formában adjuk át."
+        data-en="Requesting a copy (access, portability): via the contact in section 1; we provide the data in a machine-readable format."></li>
   </ul>
-  <p>A kérelmekre indokolatlan késedelem nélkül, legkésőbb <strong>egy hónapon belül</strong>
-     válaszolunk.</p>
+  <p data-hu="A kérelmekre indokolatlan késedelem nélkül, legkésőbb egy hónapon belül válaszolunk."
+     data-en="We respond to requests without undue delay, and within one month at the latest."></p>
 </section>
 
 <section id="torles">
-  <h2>9. Az adataid törlése</h2>
-  <p>A törlés az alkalmazásban indul: <em>Beállítások → Személyes adataim törlése</em>.
-     A szülő a saját gyermeke adatainak törlését is kérheti. A kérelmet a klub
-     adminisztrátora hagyja jóvá, és a jóváhagyás után a törlés automatikusan lefut.</p>
+  <h2 data-hu="9. Az adataid törlése" data-en="9. Deleting your data"></h2>
+  <p data-hu="A törlés az alkalmazásban indul: Beállítások → Személyes adataim törlése. A szülő a saját gyermeke adatainak törlését is kérheti. A kérelmet a klub adminisztrátora hagyja jóvá, és a jóváhagyás után a törlés automatikusan lefut."
+     data-en="Erasure starts in the application: Settings → Delete my personal data. A parent may also request erasure of their child's data. A club administrator approves the request, after which erasure runs automatically."></p>
 
-  <h3>Mi törlődik</h3>
-  <p>A profil és a belépési fiók, a sportolói adatlap, a testtömeg-mérések, az övvizsgák,
-     a sportorvosi adatok, a részvételi jelzések és azok indoklása, a csoporttagságok, a
-     meghívók, a gondviselői kapcsolatok, az utazásszervezési és a dokumentum-adatok —
-     mindezek <strong>véglegesen</strong>. A naplóból is eltávolítjuk a személyes adatokat.</p>
+  <h3 data-hu="Mi törlődik" data-en="What is deleted"></h3>
+  <p data-hu="A profil és a belépési fiók, a sportolói adatlap, a testtömeg-mérések, az övvizsgák, a sportorvosi adatok, a részvételi jelzések és azok indoklása, a csoporttagságok, a meghívók, a gondviselői kapcsolatok, az eszköz-tokenek és értesítési beállítások, az utazásszervezési és a dokumentum-adatok — mindezek véglegesen. A naplóból is eltávolítjuk a személyes adatokat."
+     data-en="The profile and sign-in account, the athlete record, weight measurements, belt examinations, medical data, attendance responses and their stated reasons, group memberships, invitations, guardian links, device tokens and notification settings, travel and document data — all permanently. Personal data is also removed from the audit log."></p>
 
-  <h3>Mi marad meg, és miért</h3>
+  <h3 data-hu="Mi marad meg, és miért" data-en="What remains, and why"></h3>
   <div class="callout">
-    <p>A <strong>versenyeredmények statisztikai adatként megmaradnak, de név nélkül</strong>:
-    a nevezésről és a mérkőzésekről eltávolítunk minden személyazonosítót — a nevet, a
-    rajtszámot és a kiemelést is —, így a sor a klub eredménystatisztikájában névtelenül
-    él tovább, és nem köthető személyhez. Ugyanígy a beszélgetésekben elküldött üzenetek
-    szövege megmarad, de a feladó „Törölt felhasználó"-ként jelenik meg.</p>
+    <p data-hu="A versenyeredmények statisztikai adatként megmaradnak, de név nélkül: a nevezésről és a mérkőzésekről eltávolítunk minden személyazonosítót — a nevet, a rajtszámot és a kiemelést is —, így a sor a klub eredménystatisztikájában névtelenül él tovább, és nem köthető személyhez. Ugyanígy a beszélgetésekben elküldött üzenetek szövege megmarad, de a feladó „Törölt felhasználó"-ként jelenik meg."
+       data-en="Competition results remain as statistical data, but without names: every identifier is removed from the entry and the matches — the name, the competitor number and the seeding — so the record lives on anonymously in the club's statistics and cannot be linked to a person. Likewise, message text in conversations remains, but the sender appears as “Deleted user”."></p>
   </div>
-  <p>A jogszabály által kötelezően megőrzendő adatok (például számviteli bizonylatok) a
-     kérés ellenére sem törölhetők a törvényi határidő előtt.</p>
+  <p data-hu="A jogszabály által kötelezően megőrzendő adatok (például számviteli bizonylatok) a kérés ellenére sem törölhetők a törvényi határidő előtt."
+     data-en="Data we are required by law to retain (for example accounting records) cannot be deleted before the statutory period expires, even on request."></p>
 </section>
 
 <section id="vedelem">
-  <h2>10. Hogyan védjük az adatokat?</h2>
+  <h2 data-hu="10. Hogyan védjük az adatokat?" data-en="10. How we protect your data"></h2>
   <ul>
-    <li>A hozzáférési szabályok az adatbázis szintjén kényszerítettek ki — nem
-        megkerülhetők az alkalmazás hibája esetén sem.</li>
-    <li>Az adatok titkosított kapcsolaton közlekednek és titkosítva tárolódnak; a
-        különösen érzékeny mezők (például TAJ-szám) külön titkosítást kapnak.</li>
-    <li>Négyszintű jogosultsági rendszer, meghívókódos, jóváhagyáshoz kötött belépés.</li>
-    <li>Minden adatmódosítás naplózott.</li>
-    <li>Adatvédelmi incidens esetén a GDPR szerint járunk el: kockázatot jelentő
-        incidensről a NAIH-ot 72 órán belül, magas kockázatú incidensről az érintetteket
-        is tájékoztatjuk.</li>
+    <li data-hu="A hozzáférési szabályok az adatbázis szintjén kényszerítettek ki — nem megkerülhetők az alkalmazás hibája esetén sem."
+        data-en="Access rules are enforced at the database level — they cannot be bypassed even by an application fault."></li>
+    <li data-hu="Az adatok titkosított kapcsolaton közlekednek és titkosítva tárolódnak; a különösen érzékeny mezők (például TAJ-szám) külön titkosítást kapnak."
+        data-en="Data travels over encrypted connections and is stored encrypted; particularly sensitive fields (such as social security numbers) receive additional encryption."></li>
+    <li data-hu="Négyszintű jogosultsági rendszer, meghívókódos, jóváhagyáshoz kötött belépés."
+        data-en="A four-level permission system, with invite-code onboarding subject to approval."></li>
+    <li data-hu="Minden adatmódosítás naplózott." data-en="Every data change is logged."></li>
+    <li data-hu="Az értesítések szövege nem tartalmaz érzékeny adatot, mert a zárolt képernyőn illetéktelen is láthatja."
+        data-en="Notification text contains no sensitive data, because it may be visible to others on the lock screen."></li>
+    <li data-hu="Adatvédelmi incidens esetén a GDPR szerint járunk el: kockázatot jelentő incidensről a NAIH-ot 72 órán belül, magas kockázatú incidensről az érintetteket is tájékoztatjuk."
+        data-en="In the event of a data breach we act under the GDPR: we notify the Hungarian supervisory authority within 72 hours where there is a risk, and also inform data subjects where the risk is high."></li>
   </ul>
 </section>
 
 <section id="nem">
-  <h2>11. Amit nem csinálunk</h2>
-  <p>Nem hozunk automatizált egyedi döntést és nem profilozunk. Nem jelenítünk meg
-     hirdetést, nem adjuk át az adatokat marketingcélra. Nem használjuk az adatokat a klub
-     működésén kívüli célra. Az alkalmazás nem kezel fényképet.</p>
+  <h2 data-hu="11. Amit nem csinálunk" data-en="11. What we don't do"></h2>
+  <p data-hu="Nem hozunk automatizált egyedi döntést és nem profilozunk. Nem jelenítünk meg hirdetést, nem adjuk át az adatokat marketingcélra. Nem használjuk az adatokat a klub működésén kívüli célra. Az alkalmazás nem kezel fényképet."
+     data-en="We make no automated individual decisions and carry out no profiling. We display no advertising and do not share data for marketing purposes. We do not use the data for any purpose beyond running the club. The application processes no photographs."></p>
 </section>
 
 <section id="panasz">
-  <h2>12. Panasz és jogorvoslat</h2>
-  <p>Először minket keress az 1. pont szerinti elérhetőségen — a tapasztalat szerint a
-     legtöbb kérdés így oldódik meg a leggyorsabban.</p>
-  <p>Emellett panaszt tehetsz a felügyeleti hatóságnál:</p>
-  <p><strong>Nemzeti Adatvédelmi és Információszabadság Hatóság (NAIH)</strong><br>
-     1055 Budapest, Falk Miksa utca 9–11. · Levelezési cím: 1363 Budapest, Pf. 9.<br>
+  <h2 data-hu="12. Panasz és jogorvoslat" data-en="12. Complaints and remedies"></h2>
+  <p data-hu="Először minket keress az 1. pont szerinti elérhetőségen — a tapasztalat szerint a legtöbb kérdés így oldódik meg a leggyorsabban."
+     data-en="Please contact us first using the details in section 1 — in our experience this resolves most questions fastest."></p>
+  <p data-hu="Emellett panaszt tehetsz a felügyeleti hatóságnál:" data-en="You may also lodge a complaint with the supervisory authority:"></p>
+  <p><strong data-hu="Nemzeti Adatvédelmi és Információszabadság Hatóság (NAIH)" data-en="Hungarian National Authority for Data Protection and Freedom of Information (NAIH)"></strong><br>
+     1055 Budapest, Falk Miksa utca 9–11. · <span data-hu="Levelezési cím" data-en="Postal address"></span>: 1363 Budapest, Pf. 9.<br>
      +36 (1) 391-1400 · <a href="mailto:ugyfelszolgalat@naih.hu">ugyfelszolgalat@naih.hu</a> ·
      <a href="https://www.naih.hu">www.naih.hu</a></p>
-  <p>Bírósághoz is fordulhatsz; a per a lakóhelyed szerinti törvényszék előtt is
-     megindítható.</p>
+  <p data-hu="Bírósághoz is fordulhatsz; a per a lakóhelyed szerinti törvényszék előtt is megindítható."
+     data-en="You may also go to court; proceedings may be brought before the court of your place of residence."></p>
 </section>
 
 <section id="modositas">
-  <h2>13. A tájékoztató módosítása</h2>
-  <p>A tájékoztató verziózott. Módosítás esetén az alkalmazás a következő belépéskor jelzi
-     a változást, és lényeges változásnál újra kéri az elfogadást. Az elfogadás ténye,
-     időpontja és az elfogadott verzió az alkalmazásban rögzítésre kerül. A korábbi
-     verziók kérésre elérhetők.</p>
+  <h2 data-hu="13. A tájékoztató módosítása" data-en="13. Changes to this notice"></h2>
+  <p data-hu="A tájékoztató verziózott. Módosítás esetén az alkalmazás a következő belépéskor jelzi a változást, és lényeges változásnál újra kéri az elfogadást. Az elfogadás ténye, időpontja és az elfogadott verzió az alkalmazásban rögzítésre kerül. A korábbi verziók kérésre elérhetők."
+     data-en="This notice is versioned. When it changes, the application flags this at your next sign-in and asks you to accept again where the change is material. The fact, time and version of your acceptance are recorded in the application. Earlier versions are available on request."></p>
   <div class="callout warn">
-    <p>Jelen tájékoztató elfogadása a regisztráció feltétele. Kiskorú sportoló adatainak
-    rögzítéséhez a törvényes képviselő külön hozzájárulása szükséges, amelyet az
-    alkalmazás a gondviselői kapcsolat létesítésekor kér el.</p>
+    <p data-hu="Jelen tájékoztató elfogadása a regisztráció feltétele. Kiskorú sportoló adatainak rögzítéséhez a törvényes képviselő külön hozzájárulása szükséges, amelyet az alkalmazás a gondviselői kapcsolat létesítésekor kér el."
+       data-en="Acceptance of this notice is a condition of registration. Recording a minor athlete's data requires the separate consent of their legal guardian, which the application requests when the guardian link is created."></p>
   </div>
 </section>
 
@@ -379,10 +407,33 @@ footer a{color:#F0C05C;}
 <footer>
   <p><strong>Újpesti Torna Egylet</strong> · 1044 Budapest, Megyeri út 13. ·
      <a href="mailto:titkarsag@ute.hu">titkarsag@ute.hu</a> · +36 1 272-1272</p>
-  <p style="margin-top:8px;">Adatkezelési tájékoztató · Verzió 1.0 · Hatályos 2026. szeptember 1-jétől ·
-     <a href="https://jooati.github.io/taekwondo-app-gdpr/">jooati.github.io/taekwondo-app-gdpr</a></p>
+  <p style="margin-top:8px;">
+    <span data-hu="Adatkezelési tájékoztató · Verzió 2.0 · Hatályos 2026. szeptember 1-jétől"
+          data-en="Privacy Notice · Version 2.0 · Effective from 1 September 2026"></span> ·
+    <a href="https://jooati.github.io/taekwondo-app-gdpr/">jooati.github.io/taekwondo-app-gdpr</a></p>
 </footer>
 
 </div>
+
+<script>
+(function(){
+  var btnHu = document.getElementById('btnHu');
+  var btnEn = document.getElementById('btnEn');
+  function setLang(lang){
+    document.documentElement.setAttribute('lang', lang);
+    document.querySelectorAll('[data-hu]').forEach(function(el){
+      el.textContent = el.getAttribute('data-' + lang);
+    });
+    btnHu.classList.toggle('on', lang === 'hu');
+    btnEn.classList.toggle('on', lang === 'en');
+    document.title = lang === 'hu'
+      ? 'Adatkezelési tájékoztató — UTE Taekwondo alkalmazás'
+      : 'Privacy Notice — UTE Taekwondo application';
+  }
+  btnHu.addEventListener('click', function(){ setLang('hu'); });
+  btnEn.addEventListener('click', function(){ setLang('en'); });
+  setLang('hu');
+})();
+</script>
 </body>
 </html>
